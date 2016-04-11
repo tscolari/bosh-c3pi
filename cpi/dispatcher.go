@@ -33,7 +33,7 @@ func (r *Dispatcher) Dispatch(method string, arguments RequestArguments) (result
 		result, err = r.cloud.CreateVm(
 			arguments.ToString(0),
 			arguments.ToString(1),
-			arguments.ToResourcePool(2),
+			arguments.ToCloudProperties(2),
 			arguments.ToNewtworks(3),
 			arguments.ToString(4),
 			arguments.ToEnvironment(5),

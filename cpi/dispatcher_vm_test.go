@@ -218,13 +218,13 @@ var _ = Describe("Dispatcher", func() {
 		})
 
 		Describe("create_vm", func() {
-			var resourcePool cloud.ResourcePool
+			var cloudProperties cloud.CloudProperties
 			var networks cloud.Networks
 			var env cloud.Environment
 
 			BeforeEach(func() {
 
-				resourcePool = cloud.ResourcePool{"key": "value"}
+				cloudProperties = cloud.CloudProperties{"key": "value"}
 				networks = cloud.Networks{"net1": cloud.Network{IP: "10.10.10.1"}}
 				env = cloud.Environment{"VAR1": "value"}
 
@@ -232,7 +232,7 @@ var _ = Describe("Dispatcher", func() {
 				arguments = []interface{}{
 					"agent-1",
 					"stemcell-1",
-					resourcePool,
+					cloudProperties,
 					networks,
 					"disk-local",
 					env,
@@ -246,11 +246,11 @@ var _ = Describe("Dispatcher", func() {
 
 			It("calls the cloud object method with the correct arguments", func() {
 				subject.Dispatch(methodName, arguments)
-				agentID, stemcellID, resourcePool_, networks_, diskLocality, env_ := cpiClient.CreateVmArgsForCall(0)
+				agentID, stemcellID, cloudProperties_, networks_, diskLocality, env_ := cpiClient.CreateVmArgsForCall(0)
 
 				Expect(agentID).To(Equal("agent-1"))
 				Expect(stemcellID).To(Equal("stemcell-1"))
-				Expect(resourcePool_).To(Equal(resourcePool))
+				Expect(cloudProperties_).To(Equal(cloudProperties))
 				Expect(networks_).To(Equal(networks))
 				Expect(diskLocality).To(Equal("disk-local"))
 				Expect(env_).To(Equal(env))

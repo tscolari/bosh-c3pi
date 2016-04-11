@@ -5,7 +5,7 @@ type Cloud interface {
 	DeleteStemcell(stemcellID string) error
 
 	CurrentVmID() string
-	CreateVm(agentID, stemcellID string, resourcePool ResourcePool, networks Networks, diskLocality string, env Environment) (string, error)
+	CreateVm(agentID, stemcellID string, cloudProperties CloudProperties, networks Networks, diskLocality string, env Environment) (string, error)
 	DeleteVm(vmID string) error
 	HasVm(vmID string) (bool, error)
 	RebootVm(vmID string) error

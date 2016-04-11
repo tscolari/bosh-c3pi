@@ -32,15 +32,15 @@ type FakeCloud struct {
 	currentVmIDReturns     struct {
 		result1 string
 	}
-	CreateVmStub        func(agentID, stemcellID string, resourcePool cloud.ResourcePool, networks cloud.Networks, diskLocality string, env cloud.Environment) (string, error)
+	CreateVmStub        func(agentID, stemcellID string, cloudProperties cloud.CloudProperties, networks cloud.Networks, diskLocality string, env cloud.Environment) (string, error)
 	createVmMutex       sync.RWMutex
 	createVmArgsForCall []struct {
-		agentID      string
-		stemcellID   string
-		resourcePool cloud.ResourcePool
-		networks     cloud.Networks
-		diskLocality string
-		env          cloud.Environment
+		agentID         string
+		stemcellID      string
+		cloudProperties cloud.CloudProperties
+		networks        cloud.Networks
+		diskLocality    string
+		env             cloud.Environment
 	}
 	createVmReturns struct {
 		result1 string
@@ -245,19 +245,19 @@ func (fake *FakeCloud) CurrentVmIDReturns(result1 string) {
 	}{result1}
 }
 
-func (fake *FakeCloud) CreateVm(agentID string, stemcellID string, resourcePool cloud.ResourcePool, networks cloud.Networks, diskLocality string, env cloud.Environment) (string, error) {
+func (fake *FakeCloud) CreateVm(agentID string, stemcellID string, cloudProperties cloud.CloudProperties, networks cloud.Networks, diskLocality string, env cloud.Environment) (string, error) {
 	fake.createVmMutex.Lock()
 	fake.createVmArgsForCall = append(fake.createVmArgsForCall, struct {
-		agentID      string
-		stemcellID   string
-		resourcePool cloud.ResourcePool
-		networks     cloud.Networks
-		diskLocality string
-		env          cloud.Environment
-	}{agentID, stemcellID, resourcePool, networks, diskLocality, env})
+		agentID         string
+		stemcellID      string
+		cloudProperties cloud.CloudProperties
+		networks        cloud.Networks
+		diskLocality    string
+		env             cloud.Environment
+	}{agentID, stemcellID, cloudProperties, networks, diskLocality, env})
 	fake.createVmMutex.Unlock()
 	if fake.CreateVmStub != nil {
-		return fake.CreateVmStub(agentID, stemcellID, resourcePool, networks, diskLocality, env)
+		return fake.CreateVmStub(agentID, stemcellID, cloudProperties, networks, diskLocality, env)
 	} else {
 		return fake.createVmReturns.result1, fake.createVmReturns.result2
 	}
@@ -269,10 +269,10 @@ func (fake *FakeCloud) CreateVmCallCount() int {
 	return len(fake.createVmArgsForCall)
 }
 
-func (fake *FakeCloud) CreateVmArgsForCall(i int) (string, string, cloud.ResourcePool, cloud.Networks, string, cloud.Environment) {
+func (fake *FakeCloud) CreateVmArgsForCall(i int) (string, string, cloud.CloudProperties, cloud.Networks, string, cloud.Environment) {
 	fake.createVmMutex.RLock()
 	defer fake.createVmMutex.RUnlock()
-	return fake.createVmArgsForCall[i].agentID, fake.createVmArgsForCall[i].stemcellID, fake.createVmArgsForCall[i].resourcePool, fake.createVmArgsForCall[i].networks, fake.createVmArgsForCall[i].diskLocality, fake.createVmArgsForCall[i].env
+	return fake.createVmArgsForCall[i].agentID, fake.createVmArgsForCall[i].stemcellID, fake.createVmArgsForCall[i].cloudProperties, fake.createVmArgsForCall[i].networks, fake.createVmArgsForCall[i].diskLocality, fake.createVmArgsForCall[i].env
 }
 
 func (fake *FakeCloud) CreateVmReturns(result1 string, result2 error) {
