@@ -3,7 +3,6 @@ package cpi_test
 import (
 	"errors"
 
-	"github.com/tscolari/bosh-c3pi/cloud"
 	"github.com/tscolari/bosh-c3pi/cloud/fakes"
 	"github.com/tscolari/bosh-c3pi/cpi"
 
@@ -24,12 +23,12 @@ var _ = Describe("Dispatcher", func() {
 
 	Context("Snapshot Operations", func() {
 		Describe("snapshot_disk", func() {
-			var metadata cloud.Metadata
+			var metadata map[string]interface{}
 
 			BeforeEach(func() {
 				methodName = "snapshot_disk"
 
-				metadata = cloud.Metadata{"key": "value"}
+				metadata = map[string]interface{}{"key": "value"}
 				arguments = []interface{}{
 					"disk-id-1",
 					metadata,

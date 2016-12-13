@@ -2,8 +2,8 @@ package cpi_test
 
 import (
 	"errors"
+	"fmt"
 
-	"github.com/tscolari/bosh-c3pi/cloud"
 	"github.com/tscolari/bosh-c3pi/cloud/fakes"
 	"github.com/tscolari/bosh-c3pi/cpi"
 
@@ -24,10 +24,10 @@ var _ = Describe("Dispatcher", func() {
 
 	Context("Disk Operations", func() {
 		Describe("create_disk", func() {
-			var cloudProperties cloud.CloudProperties
+			var cloudProperties map[string]interface{}
 
 			BeforeEach(func() {
-				cloudProperties = cloud.CloudProperties{"key": "value"}
+				cloudProperties = map[string]interface{}{"key": "value"}
 				methodName = "create_disk"
 
 				arguments = []interface{}{
@@ -42,10 +42,12 @@ var _ = Describe("Dispatcher", func() {
 				Expect(cpiClient.CreateDiskCallCount()).To(Equal(1))
 			})
 
-			It("calls the cloud object method with the correct arguments", func() {
+			FIt("calls the cloud object method with the correct arguments", func() {
 				subject.Dispatch(methodName, arguments)
 				size, cloudProperties_, vmLocality := cpiClient.CreateDiskArgsForCall(0)
 				Expect(size).To(Equal(128))
+				fmt.Printf("----------- %#v\n", cloudProperties_)
+				fmt.Printf("----------- %#v\n", cloudProperties)
 				Expect(cloudProperties_).To(Equal(cloudProperties))
 				Expect(vmLocality).To(Equal("vm-id-1"))
 			})

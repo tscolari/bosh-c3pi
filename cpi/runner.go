@@ -38,6 +38,7 @@ func (r *Runner) Run(stdin io.Reader, stdout io.Writer) {
 		return
 	}
 
+	r.logger.Info("runner", "Called with request: %#v", request)
 	result, err := r.dispatcher.Dispatch(request.Method, request.Arguments)
 
 	r.printResponse(stdout, result, err)

@@ -3,7 +3,6 @@ package cpi_test
 import (
 	"errors"
 
-	"github.com/tscolari/bosh-c3pi/cloud"
 	"github.com/tscolari/bosh-c3pi/cloud/fakes"
 	"github.com/tscolari/bosh-c3pi/cpi"
 
@@ -24,12 +23,12 @@ var _ = Describe("Dispatcher", func() {
 
 	Context("Stemcell Operations", func() {
 		Describe("create_stemcell", func() {
-			var cloudProperties cloud.CloudProperties
+			var cloudProperties map[string]interface{}
 
 			BeforeEach(func() {
 				methodName = "create_stemcell"
 
-				cloudProperties = cloud.CloudProperties{"key": "value"}
+				cloudProperties = map[string]interface{}{"key": "value"}
 				arguments = []interface{}{
 					"image-path-1",
 					cloudProperties,

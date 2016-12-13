@@ -86,7 +86,7 @@ var _ = Describe("Dispatcher", func() {
 				methodName = "set_vm_metadata"
 				arguments = []interface{}{
 					"12345",
-					cloud.Metadata{
+					map[string]interface{}{
 						"test": "test1",
 					},
 				}
@@ -218,15 +218,15 @@ var _ = Describe("Dispatcher", func() {
 		})
 
 		Describe("create_vm", func() {
-			var cloudProperties cloud.CloudProperties
-			var networks cloud.Networks
-			var env cloud.Environment
+			var cloudProperties map[string]interface{}
+			var networks map[string]interface{}
+			var env map[string]interface{}
 
 			BeforeEach(func() {
 
-				cloudProperties = cloud.CloudProperties{"key": "value"}
-				networks = cloud.Networks{"net1": cloud.Network{IP: "10.10.10.1"}}
-				env = cloud.Environment{"VAR1": "value"}
+				cloudProperties = map[string]interface{}{"key": "value"}
+				networks = map[string]interface{}{"net1": cloud.Network{IP: "10.10.10.1"}}
+				env = map[string]interface{}{"VAR1": "value"}
 
 				methodName = "create_vm"
 				arguments = []interface{}{
